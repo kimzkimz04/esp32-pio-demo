@@ -2,18 +2,27 @@
 
 #define LED_PIN 2
 
+unsigned long lastBlink = 0;
+const unsigned long BLINK_INTERVAL = 500;
+bool ledState = false;
+int blinkCount = 0;
+
 void setup() {
   Serial.begin(115200);
   pinMode(LED_PIN, OUTPUT);
-  Serial.println("ESP32 PlatformIO Demo - Version 1");
+  Serial.println("ESP32 PlatformIO Demo - Version 2 (non-blocking)");
 }
 
 void loop() {
-  digitalWrite(LED_PIN, HIGH);
-  Serial.println("LED ON");
-  delay(1000);
+  if (millis() - lastBlink >= BLINK_INTERVAL) {
+    lastBlink = millis();
+    ledState = !ledState;
+    digitalWrite(LED_PIN, ledState);
+    blinkCount++;
 
-  digitalWrite(LED_PIN, LOW);
-  Serial.println("LED OFF");
-  delay(1000);
+    Serial.print("Blink #");
+    Serial.print(blinkCount);
+    Serial.print(" | LED = ");
+    Serial.println(ledState ? "ON" : "OFF");
+  }
 }
