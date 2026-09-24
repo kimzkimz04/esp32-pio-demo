@@ -3,7 +3,7 @@
 #define LED_PIN 2
 
 unsigned long lastBlink = 0;
-const unsigned long BLINK_INTERVAL = 500;
+const unsigned long BLINK_INTERVAL = 250;
 bool ledState = false;
 int blinkCount = 0;
 
